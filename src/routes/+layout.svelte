@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
-	import '../app.css';
+
+	import '$styles/app.css';
 
 	interface MainLayoutProps {
 		children: Snippet;
