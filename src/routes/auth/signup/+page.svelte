@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { SignUpSchema } from '$lib/valibot/schemas/auth/signup';
-	import { superForm } from 'sveltekit-superforms';
+	import SuperDebug, { superForm } from 'sveltekit-superforms';
 	import { valibotClient } from 'sveltekit-superforms/adapters';
 	import { Control, Field } from 'formsnap';
 
@@ -12,34 +12,51 @@
 
 	let { data }: AuthLayoutProps = $props();
 
-	const form = superForm(data.form, {
+	const form = superForm(data.signupForm, {
 		validators: valibotClient(SignUpSchema),
-		onSubmit: ({ formData }) => {
-			console.log(formData);
-		}
+		delayMs: 500,
+		timeoutMs: 5000
 	});
 
-	const { form: formData, enhance } = form;
+	const { form: signUpFormData, errors: signUpErrors, message: signUpMessage, enhance } = form;
 </script>
 
-<form action="signup" method="POST" use:enhance>
+<form method="POST" action="?/signup" use:enhance>
 	<Field {form} name="email">
 		<Control let:attrs>
-			<input type="email" bind:value={$formData.email} {...attrs} />
+			<input type="email" bind:value={$signUpFormData.email} autocomplete="email" {...attrs} />
 		</Control>
 	</Field>
 
 	<Field {form} name="password">
 		<Control let:attrs>
-			<input type="password" bind:value={$formData.password} {...attrs} />
+			<input
+				type="password"
+				bind:value={$signUpFormData.password}
+				autocomplete="new-password"
+				{...attrs}
+			/>
 		</Control>
 	</Field>
 
 	<Field {form} name="repeatPassword">
 		<Control let:attrs>
-			<input type="password" bind:value={$formData.repeatPassword} {...attrs} />
+			<input
+				type="password"
+				bind:value={$signUpFormData.repeatPassword}
+				autocomplete="new-password"
+				{...attrs}
+			/>
+		</Control>
+	</Field>
+
+	<Field {form} name="termsAgreement">
+		<Control let:attrs>
+			<input type="checkbox" bind:checked={$signUpFormData.termsAgreement} name={attrs.name} />
 		</Control>
 	</Field>
 
 	<button>Submit</button>
 </form>
+
+<SuperDebug data={{ $signUpFormData, $signUpErrors, $signUpMessage }} />
