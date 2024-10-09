@@ -17,3 +17,8 @@ export const PasswordSchema = v.pipe(
   v.regex(/[A-z]/, "Your password must contain a uppercase letter"),
   v.regex(/[0-9]/, "Your password must conaint a number")
 )
+
+export const PasswordLooseSchema = v.pipe(
+  v.string(),
+  v.nonEmpty("Please enter your password")
+)
