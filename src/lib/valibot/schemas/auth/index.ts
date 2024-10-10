@@ -1,4 +1,5 @@
 import * as v from 'valibot';
+import { getCountries } from 'libphonenumber-js/max';
 
 export const EmailSchema = v.pipe(
   v.string(),
@@ -22,3 +23,5 @@ export const PasswordLooseSchema = v.pipe(
   v.string(),
   v.nonEmpty("Please enter your password")
 )
+
+export const PhoneNumberSchema = v.picklist(getCountries(), "Please select your country");
