@@ -12,23 +12,28 @@
 
 	let { data }: AuthLayoutProps = $props();
 
-	const form = superForm(data.signupForm, {
+	const signUpForm = superForm(data.signupForm, {
 		validators: valibotClient(SignUpSchema),
 		delayMs: 500,
 		timeoutMs: 5000
 	});
 
-	const { form: signUpFormData, errors: signUpErrors, message: signUpMessage, enhance } = form;
+	const {
+		form: signUpFormData,
+		errors: signUpErrors,
+		message: signUpMessage,
+		enhance
+	} = signUpForm;
 </script>
 
 <form method="POST" action="?/signup" use:enhance>
-	<Field {form} name="email">
+	<Field form={signUpForm} name="email">
 		<Control let:attrs>
 			<input type="email" bind:value={$signUpFormData.email} autocomplete="email" {...attrs} />
 		</Control>
 	</Field>
 
-	<Field {form} name="password">
+	<Field form={signUpForm} name="password">
 		<Control let:attrs>
 			<input
 				type="password"
@@ -39,7 +44,7 @@
 		</Control>
 	</Field>
 
-	<Field {form} name="repeatPassword">
+	<Field form={signUpForm} name="repeatPassword">
 		<Control let:attrs>
 			<input
 				type="password"
@@ -50,7 +55,7 @@
 		</Control>
 	</Field>
 
-	<Field {form} name="termsAgreement">
+	<Field form={signUpForm} name="termsAgreement">
 		<Control let:attrs>
 			<input type="checkbox" bind:checked={$signUpFormData.termsAgreement} name={attrs.name} />
 		</Control>
