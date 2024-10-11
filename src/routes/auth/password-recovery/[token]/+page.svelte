@@ -1,9 +1,10 @@
 <script lang="ts">
 	import { valibotClient } from 'sveltekit-superforms/adapters';
-	import type { PageData } from './$types';
 	import { PasswordRecoverySchema } from '$lib/valibot/schemas/auth/password-recovery';
 	import SuperDebug, { superForm } from 'sveltekit-superforms';
 	import { Control, Field } from 'formsnap';
+
+	import type { PageData } from './$types';
 
 	interface PasswordRecoveryPageProps {
 		data: PageData;
