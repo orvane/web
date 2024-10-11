@@ -13,7 +13,9 @@
 	let { data }: PasswordRecoveryRequestPageProps = $props();
 
 	const passwordRecoveryRequestForm = superForm(data.passwordRecoveryRequestForm, {
-		validators: valibotClient(PasswordRecoveryRequestSchema)
+		validators: valibotClient(PasswordRecoveryRequestSchema),
+		delayMs: 500,
+		timeoutMs: 5000
 	});
 
 	const {

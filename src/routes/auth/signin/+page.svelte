@@ -12,7 +12,9 @@
 	let { data }: SignInPageProps = $props();
 
 	const signInForm = superForm(data.signInForm, {
-		validators: valibotClient(SignInSchema)
+		validators: valibotClient(SignInSchema),
+		delayMs: 500,
+		timeoutMs: 5000
 	});
 
 	const { form: signInFormData, enhance } = signInForm;
