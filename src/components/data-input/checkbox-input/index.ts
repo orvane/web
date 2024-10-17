@@ -43,6 +43,7 @@ type Props<T extends Record<string, unknown>> = Omit<
 > & {
   form: SuperForm<T>;
   name: FormPathLeaves<T>;
+  ref?: HTMLButtonElement | null,
   label?: string;
   labelRef?: HTMLLabelElement | null
   description?: string;
