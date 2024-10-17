@@ -1,43 +1,50 @@
 <script lang="ts" generics="T extends Record<string, unknown>">
-	import { Field, FieldErrors, Control, Label, Description } from 'formsnap';
+	import { Field, FieldErrors, Control, Label as FormLabel, Description } from 'formsnap';
+	import { Label } from 'bits-ui';
 
 	import { TextInputStyles, type TextInputProps } from '.';
 
 	let {
-		value = $bindable(),
+		value = $bindable(''),
 		form,
 		name,
+		ref = $bindable(null),
 		label,
+		labelRef = $bindable(null),
 		description,
 		size,
 		...props
 	}: TextInputProps<T> = $props();
 
-	const styles = TextInputStyles({});
+	const classes = TextInputStyles({});
 </script>
 
-<div class={styles.root}>
+<div class={classes.root}>
 	<Field {form} {name}>
 		<Control let:attrs>
-			<div class={styles.control}>
+			<div class={classes.control}>
 				{#if label}
-					<Label class={styles.label}>{label}</Label>
+					<FormLabel asChild let:labelAttrs>
+						<Label.Root bind:ref={labelRef} class={classes.label} {...labelAttrs}>
+							{label}
+						</Label.Root>
+					</FormLabel>
 				{/if}
 
-				<input type="text" bind:value class={styles.input} {...props} {...attrs} />
+				<input type="text" bind:value bind:this={ref} class={classes.input} {...props} {...attrs} />
 			</div>
 		</Control>
 
 		{#if description}
-			<Description class={styles.description}>
+			<Description class={classes.description}>
 				{description}
 			</Description>
 		{/if}
 
 		<!-- TODO: Create a custom errors component -->
-		<FieldErrors class={styles.errors} let:errors let:errorAttrs>
+		<FieldErrors class={classes.errors} let:errors let:errorAttrs>
 			{#each errors as err}
-				<span class={styles.error} {...errorAttrs}>{err}</span>
+				<span class={classes.error} {...errorAttrs}>{err}</span>
 			{/each}
 		</FieldErrors>
 	</Field>

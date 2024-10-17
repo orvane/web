@@ -1,15 +1,17 @@
 <script lang="ts" generics="T extends Record<string, unknown>">
-	import { Control, Description, Field, FieldErrors, Label } from 'formsnap';
-	import { Toggle } from 'bits-ui';
+	import { Control, Description, Field, FieldErrors, Label as FormLabel } from 'formsnap';
+	import { Toggle, Label } from 'bits-ui';
 	import { Eye, EyeOff } from 'lucide-svelte';
 
 	import { PasswordInputStyles, type PasswordInputProps } from '.';
 
 	let {
-		value = $bindable(),
+		value = $bindable(''),
+		ref = $bindable(null),
 		form,
 		name,
 		label,
+		labelRef = $bindable(null),
 		description,
 		size,
 		...props
@@ -25,12 +27,17 @@
 		<Control let:attrs>
 			<div class={classes.control}>
 				{#if label}
-					<Label class={classes.label}>{label}</Label>
+					<FormLabel asChild let:labelAttrs>
+						<Label.Root bind:ref={labelRef} class={classes.label} {...labelAttrs}>
+							{label}
+						</Label.Root>
+					</FormLabel>
 				{/if}
 
 				<input
 					type={passwordVisible ? 'text' : 'password'}
 					bind:value
+					bind:this={ref}
 					class={classes.input}
 					{...props}
 					{...attrs}
