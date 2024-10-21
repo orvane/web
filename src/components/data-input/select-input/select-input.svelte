@@ -29,10 +29,6 @@
 
 	const type = $derived(multiple ? 'multiple' : 'single');
 	const classes = SelectInputStyles({});
-
-	$effect(() => {
-		console.log(value);
-	});
 </script>
 
 <div class={classes.root}>
